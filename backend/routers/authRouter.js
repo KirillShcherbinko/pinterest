@@ -20,3 +20,7 @@ authRouter.get("/registration", AuthController.showRegistration)
 
 // Запрос на отрисовку страницы входа в аккаунт
 authRouter.get("/login", AuthController.showLogin)
+
+
+// Экспортируем маршрутизатор для авторизации
+export default authRouter
