@@ -1,9 +1,9 @@
-import {verify} from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import secretKey from "../config.js"
 
 
 // Функция для декодирования jwt токена
-const jwtDecoding = function(req, res, next) {
+const authMiddleware = function(req, res, next) {
     try{
         // Извлекаем токен из заголовка
         const token = req.headers.authorization.split(" ")[1] 
@@ -14,8 +14,8 @@ const jwtDecoding = function(req, res, next) {
         }
 
         // Декодируем данные
-        const decodedData = verify(token, secretKey)
-
+        const decodedData = jwt.verify(token, secretKey["secret"])
+    
         // Добавляем данные в тело запроса
         req.user = decodedData
 
@@ -28,4 +28,4 @@ const jwtDecoding = function(req, res, next) {
     }
 }
 
-export default jwtDecoding
+export default authMiddleware
