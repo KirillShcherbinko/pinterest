@@ -1,47 +1,64 @@
 <script>
-  import axios from "axios";
+import axios from "axios";
+import RedirectButton from "./components/RedirectButton.vue";
 
-  export default {
-    data() {
-      return {
-        pins: [],
-        err: null
-      };
-    },
+export default {
+  components: { RedirectButton },
 
-    methods: {
-      async fetchAllPins() {
-        try {
-          const res = await axios.get("http://localhost:5000/pins");
-          this.pins = res.data.pins;
-        } catch (e) {
-          this.err = "Data download error";
-        }
-      },
+  data() {
+    return {
+      pins: [],
+      err: null
+    };
+  },
 
-      getImage(imageName) {
-        return `http://localhost:5000/${imageName}`
+  computed: {
+    signButtonText() {
+      return !localStorage.getItem("token") ? "Sign in" : "Sign out"
+    }
+  },
+
+  methods: {
+    async fetchAllPins() {
+      try {
+        const res = await axios.get("http://localhost:5000/pins");
+        this.pins = res.data.pins;
+      } catch (e) {
+        console.error(e);
+        this.err = "Data download error";
       }
     },
 
-    mounted() {
-      this.fetchAllPins();
-    }
-  };
+    getImage(imageName) {
+      return `http://localhost:5000/${imageName}`;
+    },
+  },
+
+  mounted() {
+    this.fetchAllPins();
+  },
+};
 </script>
 
 <template>
   <div>
-    <h1>Hello, world</h1>
-    <div v-if="err" class="error">{{ err }}</div>
-    <div v-for="pin in pins":key="pin._id">
-      <img :src="getImage(pin.picture)" alt="Pin image">
+    <div v-if="!$route.path.includes('/auth')">
+      <h1>Hello, world</h1>
+      <div v-if="err" class="error">{{ err }}</div>
+      <RedirectButton to="/auth/login">{{ signButtonText }}</RedirectButton>
+      <div v-if="pins.length > 0">
+        <div v-for="pin in pins" :key="pin._id">
+          <img :src="getImage(pin.picture)" alt="Pin image">
+        </div>
+      </div>
+      <div v-else-if="!err">No pins available.</div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <style scoped>
-  .error {
-    color: red;
-  }
+.error {
+  color: red;
+}
 </style>
