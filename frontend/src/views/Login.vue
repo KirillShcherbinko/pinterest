@@ -19,7 +19,7 @@
                     const token = res.token
                     console.log(token)
                     if (token) {
-                        localStorage.setItem('token', token)
+                        localStorage.setItem("token", token)
                         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
                     this.$router.push("/");
@@ -39,15 +39,16 @@
         <input class="form-container__input" v-model="username" placeholder="Name" name="username" type="text" />
         <input class="form-container__input" v-model="password" placeholder="Password" name="password" type="password" />
         <input class="form-container__submit-button" type="submit" value="Login" />
+        <h3>Don't have an account?</h3>
+        <p class="form-container__link">
+            <router-link to="/auth/registration">Create a new account</router-link>
+        </p>
+        <p class="form-container__link">
+            <router-link to="/">Go to home page</router-link>
+        </p>
+        <div v-if="err" class="error">{{ err }}</div>
     </form>
-    <h3>Don't have an account?</h3>
-    <p class="form-container__link">
-        <router-link to="/auth/registration">Create a new account</router-link>
-    </p>
-    <p class="form-container__link">
-        <router-link to="/">Go to home page</router-link>
-    </p>
-    <div v-if="err" class="error">{{ err }}</div>
+    
 </template>
 
 
@@ -56,14 +57,6 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
-
-    .page {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #2f2f2f;
     }
 
     h1 {

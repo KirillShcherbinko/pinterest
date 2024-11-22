@@ -1,20 +1,46 @@
 <script>
+    import axios from "axios"
+
     export default {
-        name: "Registration"
+        name: "Registration",
+        data() {
+            return {
+                username: "", 
+                password: "", 
+                err: "",
+            };
+        },
+        methods: {
+            async handleRegistration() {
+                try {
+                    const registrationData = {
+                        username: this.username,
+                        password: this.password,
+                    };
+
+                    await axios.post("http://localhost:5000/auth/registration", registrationData)
+
+                    this.$router.push("/auth/login")
+                } catch (e) {
+                    this.err = e.response?.data?.message || "Registration failed"
+                }
+            },
+        },
     }
 </script>
 
 <template>
     <h1>Registration Form</h1>
-    <form class="form-container" action="/registration" method="post">
-        <input class="form-container__input" placeholder="Name" name="username" type="text" />
-        <input class="form-container__input" placeholder="Password" name="password" type="password" />
+    <form @submit.prevent="handleRegistration" class="form-container" action="/registration" method="post">
+        <input class="form-container__input" v-model="username" placeholder="Name" name="username" type="text" />
+        <input class="form-container__input" v-model="password" placeholder="Password" name="password" type="password" />
         <input class="form-container__submit-button" type="submit" value="Registration" />
     </form>
     <h3>Don't have an account?</h3>
     <p class="form-container__link">
         <router-link to="/auth/login">Go back to login page</router-link>
     </p>
+    <div v-if="err" class="error">{{ err }}</div>
 </template>
 
 
