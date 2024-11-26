@@ -33,7 +33,7 @@
             
                     const token = localStorage.getItem("token");
                     
-                    await axios.post("http://localhost:5000/pins", formData, {
+                    await axios.post("http://217.12.38.89:5000/pins", formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                             Authorization: `Bearer ${token}`,
