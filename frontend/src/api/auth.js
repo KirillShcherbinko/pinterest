@@ -7,7 +7,7 @@ export async function login(username, password) {
         password: password,
       };
   
-      const res = await axios.post('http://217.12.38.89:5000/auth/login', data);
+      const res = await axios.post('/api/auth/login', data);
   
       return res.data; 
     } catch (e) {
