@@ -35,12 +35,14 @@
         <input class="form-container__input" v-model="username" placeholder="Name" name="username" type="text" />
         <input class="form-container__input" v-model="password" placeholder="Password" name="password" type="password" />
         <input class="form-container__submit-button" type="submit" value="Registration" />
-    </form>
-    <h3>Don't have an account?</h3>
-    <p class="form-container__link">
-        <router-link to="/auth/login">Go back to login page</router-link>
+        <h3>Already have an account?</h3>
+        <p class="form-container__link">
+        <router-link to="/auth/login">
+            Go back to login page
+        </router-link>
     </p>
     <div v-if="err" class="error">{{ err }}</div>
+    </form>
 </template>
 
 
