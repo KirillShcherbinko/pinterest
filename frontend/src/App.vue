@@ -22,7 +22,7 @@ export default {
   methods: {
     async fetchAllPins() {
       try {
-        const res = await axios.get("http://localhost:5000/pins");
+        const res = await axios.get("http://217.12.38.89:5000/pins");
         this.pins = res.data.pins;
       } catch (e) {
         this.err = "Data download error";
@@ -30,7 +30,7 @@ export default {
     },
 
     getImage(imageName) {
-      return `http://localhost:5000/${imageName}`;
+      return `http://217.12.38.89:5000/${imageName}`;
     },
 
     deleteToken() {

@@ -18,7 +18,7 @@
                         password: this.password,
                     };
 
-                    await axios.post("http://localhost:5000/auth/registration", registrationData)
+                    await axios.post("http://217.12.38.89:5000/auth/registration", registrationData)
 
                     this.$router.push("/auth/login")
                 } catch (e) {
